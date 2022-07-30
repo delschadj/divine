@@ -1,15 +1,18 @@
 import React from 'react';
-import header from "../assets/images/header_cropped.jpg"
 import HeroSection from '../components/Explore/HeroSection';
-import styles from "../pages/explore.css"
+import Religions from '../components/Explore/Religions';
 
-
+import header from "../assets/images/header.jpeg"
 
 const About = () => {
   return (
 
     <div>
-      <HeroSection/>
+      <HeroSection 
+        header={header} 
+        h1={"Start exploring the world of other religions."} 
+        text={"Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum."}/>
+      <Religions/>
     </div>
 
   );

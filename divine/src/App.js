@@ -9,10 +9,13 @@ import Explore from './pages/explore';
 import Ask from './pages/ask';
 import Connect from './pages/connect';
 
+import Christianity from "./pages/christianity";
 
 import { Route, Routes, Switch } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 import ProtectedRoute from "./components/ProtectedRoute";
+import Islam from "./pages/islam";
+import Judaism from "./pages/judaism";
 
 
 function App() {
@@ -28,11 +31,28 @@ function App() {
             <Route  path="/welcome" element ={<Welcome emailApp={emailApp}/>}/>
 
 
-
           <Route path='/explore' element={
             <ProtectedRoute>
               <Navbar />
               <Explore />
+          </ProtectedRoute>}/>
+
+          <Route path='/explore/islam' element={
+            <ProtectedRoute>
+              <Navbar />
+              <Islam />
+          </ProtectedRoute>}/>
+
+          <Route path='/explore/judaism' element={
+            <ProtectedRoute>
+              <Navbar />
+              <Judaism />
+          </ProtectedRoute>}/>
+
+          <Route path='/explore/christianity' element={
+            <ProtectedRoute>
+              <Navbar />
+              <Christianity />
           </ProtectedRoute>}/>
 
           <Route path='/ask' element={
