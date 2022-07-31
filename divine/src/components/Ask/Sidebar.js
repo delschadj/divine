@@ -12,7 +12,7 @@ function Sidebar() {
           src="https://qphs.fs.quoracdn.net/main-thumb-t-930-100-cbbsbwijdhpyzlpipejvqpiijhhoaday.jpeg"
           alt=""
         />
-        <p>History</p>
+        <p>Christianity</p>
       </div>
 
       <div className="sidebarOption">
@@ -21,14 +21,14 @@ function Sidebar() {
           alt=""
         />
 
-        <p>Business</p>
+        <p>Islam</p>
       </div>
       <div className="sidebarOption">
         <img
           src="https://qphs.fs.quoracdn.net/main-thumb-t-1913-100-B8JrwaVauFzsaTSqXDqoWLCXzQb2mTE9.jpeg"
           alt=""
         />
-        <p>Psychology</p>
+        <p>Judaism</p>
       </div>
 
       <div className="sidebarOption">
@@ -36,7 +36,7 @@ function Sidebar() {
           src="https://qphs.fs.quoracdn.net/main-thumb-t-877-100-e7jKHEQr0HExAIA9rlsyHlV6HJyRruEo.jpeg"
           alt=""
         />
-        <p>Cooking</p>
+        <p>Buddhism</p>
       </div>
 
       <div className="sidebarOption">
@@ -44,7 +44,7 @@ function Sidebar() {
           src="https://qphs.fs.quoracdn.net/main-thumb-t-801-100-Sf8h894FXbQZQit0TeqDrrqS6xw6dwCQ.jpeg"
           alt=""
         />
-        <p>Music</p>
+        <p>Hinduism</p>
       </div>
 
       <div className="sidebarOption">
