@@ -26,7 +26,6 @@ function Post () {
     const Close = <CloseIcon/>
 
 
-
     const handleQuill = (value) => {
         setAnswer(value);
       };

@@ -56,6 +56,19 @@
   border-radius: 5px;
 }
 
+.post__btnAnswer {
+  margin-left: auto;
+  cursor: pointer;
+  padding: 7px;
+  background-color: #222;
+  outline: none;
+  border: none;
+  color: lightgray;
+  font-weight: 300;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
 .post__btnAnswer:hover {
   color: #222;
   background: lightgray;

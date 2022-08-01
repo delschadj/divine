@@ -30,16 +30,18 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore ()
 const storage = getStorage();
+const currentUser = getAuth ();
 
 // collection refs
 //----------------
 // users
 const users_colRef = collection (db, "users")
+const questionsColRef = collection (db, "questions")
 
 
 // realtime database (snapshots)
 //------------------------------
-// real time users data
+// real time users
 onSnapshot (users_colRef, (snapshot) => {
   let users = []
   snapshot.docs.forEach (user => {
@@ -47,8 +49,14 @@ onSnapshot (users_colRef, (snapshot) => {
   })
 })
 
+// real time questions
+onSnapshot (questionsColRef, (snapshot) => {
+  let questions = []
+  snapshot.docs.forEach (question => {
+    questions.push ({ ...question.data(), id: question.id})
+  })
+})
 
-const currentUser = getAuth ();
 
 // Storage +Upload
 export async function upload (file, currentUser, setLoading ) {
@@ -67,6 +75,6 @@ export async function upload (file, currentUser, setLoading ) {
 
 
 export const auth = getAuth(app);
-export { users_colRef, storage }
+export { users_colRef, questionsColRef ,storage }
 
 export default app
