@@ -1,17 +1,17 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {UserAuth} from "../../context/AuthContext"
-import Avater from "../../assets/images/avater_empty.png"
-
 import { query, where, onSnapshot } from "firebase/firestore";
-import { getAuth } from "firebase/auth"
 
 // Our database
-import { users_colRef } from '../../firebase.js';
+import { users_colRef, upload } from '../../firebase.js';
 
 const Account = () => {
   const navigate = useNavigate();
   
+  const [photo, setPhoto] = useState (null);
+  const [loading, setLoading] = useState (false)
+
   const [currentUser, setCurrentUser] = useState ({});
   const {user, logout} = UserAuth();
   const [mail, setMail] = useState(user.email);
@@ -41,11 +41,7 @@ const Account = () => {
   }, [mail]);
 
 
-  useEffect(() => {
-    if (user?.photoURL) {
-      setPhotoURL (user.photoURL) 
-    }
-  }, [user])
+
 
 
 
@@ -61,12 +57,32 @@ const Account = () => {
     }
   }
 
-  function handleChange () {
 
+  
+
+
+
+  function handleChange (e) {
+    if (e.target.files[0]) {
+      setPhoto(e.target.files [0])
+      console.log (photo)
+    }
   }
 
   function handleClick () {
+    upload(photo, user, setLoading )
+    window.location.reload(false);
+  }
 
+  useEffect(() => {
+    if (user?.photoURL) {
+      setPhotoURL (user.photoURL) 
+    }
+  }, [user])
+
+  if (currentUser["email"] === null)
+  {
+    console.log ("Null error!")
   }
 
   return (
@@ -79,7 +95,7 @@ const Account = () => {
 
       <div>
         <input type="file" onChange={handleChange}></input>
-        <button className='border px-6 py-2 my-4' onClick={handleClick}> Upload </button>
+        <button disabled={loading || !photo} className='border px-6 py-2 my-4' onClick={handleClick}> Upload </button>
         <img src={photoURL}/>
       </div>
 
