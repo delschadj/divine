@@ -26,7 +26,7 @@ function App() {
       
       <AuthContextProvider>
         <Routes>
-          <Route path='/' element={<Login />} />
+          <Route path='/' element={<Login setEmailApp={setEmailApp} />} />
           <Route  path='/signup' element={<Signup setEmailApp={setEmailApp} />} />
             <Route  path="/welcome" element ={<Welcome emailApp={emailApp}/>}/>
 
@@ -67,12 +67,12 @@ function App() {
               <Connect />
           </ProtectedRoute>}/>
 
-          <Route path='/account' element={
-            <ProtectedRoute>
-              <Navbar />
-              <Account />
+          <Route path='/account' element={ 
+          <ProtectedRoute> 
+            <Navbar /> 
+            <Account /> 
           </ProtectedRoute>}/>
-
+          
           
         </Routes>
       </AuthContextProvider>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../../context/AuthContext';
 
-const Login = () => {
+const Login = ({ setEmailApp }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -13,6 +13,7 @@ const Login = () => {
     e.preventDefault();
     setError('')
     try {
+      setEmailApp (email)
       await signIn(email, password)
       navigate('/account')
     } catch (e) {

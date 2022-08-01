@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {UserAuth} from "../../context/AuthContext"
 
-import { addDoc } from "firebase/firestore"
-
-// Our database
-import { users_colRef } from '../../firebase.js';
-
 const Signup = ({ setEmailApp }) => {
 
   const [email, setEmail] = useState ("")

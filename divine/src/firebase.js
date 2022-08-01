@@ -10,6 +10,8 @@ import {
 
 import { getAuth } from "firebase/auth";
 
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -25,9 +27,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Initialize Firestore database
 const db = getFirestore ()
+const storage = getStorage();
 
 // collection refs
 //----------------
@@ -43,13 +44,13 @@ onSnapshot (users_colRef, (snapshot) => {
   snapshot.docs.forEach (user => {
     users.push ({ ...user.data(), id: user.id})
   })
-
-  console.log (users)
-
 })
+
+// Custom Hook
+
 
 
 export const auth = getAuth(app);
-export { users_colRef }
+export { users_colRef, storage }
 
 export default app
