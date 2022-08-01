@@ -1,3 +1,9 @@
+import React, {useState} from "react";
+import ReactQuill from "react-quill";
+import Modal from "react-responsive-modal"
+import CloseIcon from "@material-ui/icons/Close"
+import { UserAuth } from "../../context/AuthContext";
+
 import { Avatar } from "@material-ui/core";
 import {
     ArrowDownwardOutlined,
@@ -8,10 +14,25 @@ import {
     ShareOutlined,
   } from "@material-ui/icons";
 
-import React from "react";
+
+import "../css/Feed.css"
 import "../css/Post.css";
+import "react-responsive-modal/styles.css"
+import "react-quill/dist/quill.snow.css";
 
 function Post () {
+    const [isModalOpen, setIsModalOpen] = useState (false)
+    const [answer, setAnswer] = useState("");
+    const Close = <CloseIcon/>
+
+
+
+    const handleQuill = (value) => {
+        setAnswer(value);
+      };
+      // console.log(answer);
+
+
     return (
         <div className="post">
 
@@ -22,8 +43,51 @@ function Post () {
             </div>
 
             <div className="post__body">
-                <p> This is test question</p>
-                <button className="post__btnAnswer"> Answer </button>
+                <div className="post__question">
+                    <p> This is test question</p>
+                </div>
+
+                    <button onClick={()=> setIsModalOpen(true)} className="post__btnAnswer"> Answer </button>
+                    <Modal
+                        open={isModalOpen}
+                        closeIcon={Close}
+                        onClose={() => setIsModalOpen(false)}
+                        closeOnEsc
+                        center
+                        closeOnOverlayClick={false}
+                        styles={{
+                            overlay: {
+                            height: "auto",},}}>
+
+                        <div className="modal__question">
+                            <h1>This is test question</h1>
+                            <p> asked by <span className="name">Username</span> on{" "}
+                                <span className="name">
+                                    01.08.2022
+                                </span>
+                            </p>
+                        </div>
+
+                        <div className="modal__answer">
+                            <ReactQuill
+                                value={answer}
+                                onChange={handleQuill}
+                                placeholder="Enter your answer"/>
+                        </div>
+
+                        <div className="modal__button">
+                            <button className="cancle" onClick={() => setIsModalOpen(false)}>
+                                Cancel
+                            </button>
+
+                            <button onClick={console.log ("Implement handle submit function")} type="submit" className="add">
+                                Add Answer
+                            </button>
+                        </div>
+                        
+
+                    </Modal>
+
             </div>
 
             <div className="post__footer">
@@ -80,10 +144,14 @@ function Post () {
                         margin: "0px 10px",}}
                         className="post-info">
                     </div>
-                        
-                    <p>userName</p>
+                        <p>Username</p>
+                        <span>Timestamp</span>
                     </div>
 
+                </div>
+
+                <div className="post-answer">
+                    This is test answer
                 </div>
 
             </div>
