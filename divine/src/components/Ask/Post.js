@@ -3,6 +3,8 @@ import ReactQuill from "react-quill";
 import Modal from "react-responsive-modal"
 import CloseIcon from "@material-ui/icons/Close"
 
+import parse from 'html-react-parser';
+
 import Icon1 from "../../assets/images/Icon1.jpg"
 
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
@@ -12,14 +14,6 @@ import { collection, query, where, getDocs, addDoc, updateDoc, doc, increment } 
 import { set } from "firebase/database";
 
 import { Avatar } from "@material-ui/core";
-import {
-    ArrowDownwardOutlined,
-    ArrowUpwardOutlined,
-    ChatBubbleOutlined,
-    MoreHorizOutlined,
-    RepeatOneOutlined,
-    ShareOutlined,
-  } from "@material-ui/icons";
 
 
 import "../css/Feed.css"
@@ -27,7 +21,7 @@ import "../css/Post.css";
 import "react-responsive-modal/styles.css"
 import "react-quill/dist/quill.snow.css";
 
-function Post ({question}) {
+function Post ({question, answers}) {
 
     const [error, setError] = useState ();
     const [isModalOpen, setIsModalOpen] = useState (false)
@@ -39,8 +33,21 @@ function Post ({question}) {
 
     const auth = getAuth();
     const user = auth.currentUser;
-
     const Close = <CloseIcon/>
+
+    const parse = require('html-react-parser');
+    const answersForQuestion = []
+
+    const getAllAnswers = () => {
+        answers.forEach (answer => {
+            if (answer["questionID"] === question.id)
+            {
+                answersForQuestion.push ({ ...answer})
+            }
+        })
+    }
+
+    getAllAnswers()
 
     const handleAnswerClick = (value) => {
         setIsModalOpen(true)
@@ -57,17 +64,15 @@ function Post ({question}) {
     
         try{
 
-        // Update question
-        const washingtonRef = doc(questionsColRef,  currentQuestion);
+        // Update questionDoc
+        const questionRef = doc(questionsColRef,  currentQuestion);
 
         // Set the "capital" field of the city 'DC'
-        await updateDoc(washingtonRef, {
+        await updateDoc(questionRef, {
             answers_count: increment(1)
         });
 
-
-
-        
+        // Upload Answer
           setTimestamp (Date)
     
           // Object to paste
@@ -171,71 +176,57 @@ function Post ({question}) {
 
             </div>
 
-            <div className="post__footer">
-                <div className="post__footerAction">
-                    <ArrowUpwardOutlined />
-                    <ArrowDownwardOutlined />
-                </div>
-
-                    <RepeatOneOutlined />
-                    <ChatBubbleOutlined />
-
-                <div className="post__footerLeft">
-                    <ShareOutlined />
-                    <MoreHorizOutlined />
-                </div>
-            </div>
-
             <p style={{
                 color: "rgba(0,0,0,0.5)",
                 fontSize: "12px",
                 fontWeight: "bold",
-                margin: "10px 0",}}>
+                margin: "0",}}>
 
                 {question.answers_count} Answers
             </p>
+            
 
-            <div style={{
-                    margin: "5px 0px 0px 0px ",
-                    padding: "5px 0px 0px 20px",
-                    borderTop: "1px solid lightgray",}} 
-                className="post__answer">
+            
 
-                test
-
-                <div style={{
+                 {answersForQuestion.map(( answerObject ) => (
+                <>
+                    <div
+                    style={{
                         display: "flex",
                         flexDirection: "column",
                         width: "100%",
                         padding: "10px 5px",
-                        borderTop: "1px solid lightgray",}}
-                    className="post-answer-container">
-
-                    <div style={{
+                        borderTop: "1px solid lightgray",
+                    }}
+                    className="post-answer-container"
+                    >
+                    <div
+                        style={{
                         display: "flex",
                         alignItems: "center",
                         marginBottom: "10px",
                         fontSize: "12px",
                         fontWeight: 600,
-                        color: "#888",}}
-                    className="post-answered">
-
-                    <Avatar/>
-                    <div style={{
-                        margin: "0px 10px",}}
-                        className="post-info">
+                        color: "#888",
+                        }}
+                        className="post-answered"
+                    >
+                        <Avatar />
+                        <div
+                        style={{
+                            margin: "0px 10px",
+                        }}
+                        className="post-info"
+                        >
+                        <p>{answerObject["username"]}</p>
+                        </div>
                     </div>
-                        <p>Username</p>
-                        <span>Timestamp</span>
+                    <div className="post-answer">{parse(answerObject["answer"])}</div>
                     </div>
+                </>
+                ))}
+                  
 
-                </div>
-
-                <div className="post-answer">
-                    This is test answer
-                </div>
-
-            </div>
 
 
         </div>

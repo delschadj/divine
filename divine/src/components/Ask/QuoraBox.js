@@ -25,7 +25,6 @@ function QuoraBox() {
   const [question, setQuestion] = useState("");
   const [timestamp, setTimestamp] = useState (Date);
   const [religionCategory, setReligionCategory] = useState ("Christianity")
-  const [upvotes, setUpvotes] = useState (0)
   const [username, setUsername] = useState ();
   const [uid, setUid] = useState ();
 
@@ -57,7 +56,6 @@ function QuoraBox() {
         question: question,
         religionCategory: religionCategory,
         timestamp: timestamp,
-        upvotes: upvotes,
         username: username,
         uid: uid,
        })
