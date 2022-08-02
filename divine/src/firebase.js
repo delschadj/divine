@@ -1,5 +1,3 @@
-import {UserAuth} from "../src/context/AuthContext"
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
@@ -29,19 +27,16 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore ()
+
 const storage = getStorage();
 const currentUser = getAuth ();
 
 // collection refs
-//----------------
-// users
 const users_colRef = collection (db, "users")
 const questionsColRef = collection (db, "questions")
+const answersColRef = collection (db, "answers")
 
-
-// realtime database (snapshots)
-//------------------------------
-// real time users
+// realtime databases
 onSnapshot (users_colRef, (snapshot) => {
   let users = []
   snapshot.docs.forEach (user => {
@@ -49,11 +44,17 @@ onSnapshot (users_colRef, (snapshot) => {
   })
 })
 
-// real time questions
 onSnapshot (questionsColRef, (snapshot) => {
   let questions = []
   snapshot.docs.forEach (question => {
     questions.push ({ ...question.data(), id: question.id})
+  })
+})
+
+onSnapshot (answersColRef, (snapshot) => {
+  let answers = []
+  snapshot.docs.forEach (answer => {
+    answers.push ({ ...answer.data(), id: answer.id})
   })
 })
 
@@ -63,11 +64,11 @@ export async function upload (file, currentUser, setLoading ) {
   const fileRef = ref (storage, currentUser.uid + ".png")
 
   setLoading (true);
+
   const snapshot = await uploadBytes (fileRef, file)
   const photoURL = await getDownloadURL(fileRef)
 
   updateProfile (currentUser, {photoURL: photoURL})
-
 
   setLoading (false)
   alert ("Uploaded")
@@ -75,6 +76,6 @@ export async function upload (file, currentUser, setLoading ) {
 
 
 export const auth = getAuth(app);
-export { users_colRef, questionsColRef ,storage }
+export { users_colRef, questionsColRef, answersColRef, storage}
 
 export default app

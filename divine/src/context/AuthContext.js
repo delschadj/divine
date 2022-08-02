@@ -2,6 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -12,8 +14,20 @@ const UserContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
 
-  const createUser = (email, full_name, username, religion, password) => {
-    return createUserWithEmailAndPassword(auth, email, full_name, username, religion, password);
+  const createUser = async (name, email, password) => {
+    try {
+      await createUserWithEmailAndPassword(auth, email, password).catch((err) =>
+        console.log(err)
+      );
+      await sendEmailVerification(auth.currentUser).catch((err) =>
+        console.log(err)
+      );
+      await updateProfile(auth.currentUser, { displayName: name }).catch(
+        (err) => console.log(err)
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
    const signIn = (email, full_name, username, religion, password) =>  {

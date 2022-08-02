@@ -42,11 +42,6 @@ const Account = () => {
 
 
 
-
-
-
-
-
   const handleLogout = async () => {
     try {
       await logout()
@@ -58,10 +53,6 @@ const Account = () => {
   }
 
 
-  
-
-
-
   function handleChange (e) {
     if (e.target.files[0]) {
       setPhoto(e.target.files [0])
@@ -71,7 +62,6 @@ const Account = () => {
 
   function handleClick () {
     upload(photo, user, setLoading )
-    window.location.reload(false);
   }
 
   useEffect(() => {
@@ -90,7 +80,7 @@ const Account = () => {
       <h1 className='text-2xl font-bold py-4'>Account</h1>
       <p>User Email: {user && currentUser["email"]}</p>
       <p>Full name: {user && currentUser["full_name"]}</p>
-      <p>Username: {user && currentUser["username"]}</p>
+      <p>Username: {user && user.displayName}</p>
       <p>Relgion: {user && currentUser["religion"]}</p>
 
       <div>

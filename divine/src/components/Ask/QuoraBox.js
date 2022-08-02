@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { questionsColRef } from '../../firebase';
 import { addDoc } from "firebase/firestore";
 
 import CloseIcon from "@material-ui/icons/Close"
-
-import {
-  AssignmentTurnedInOutlined,
-  NotificationsOutlined,
-  PeopleAltOutlined,
-  Search,
-  ExpandMore,
-} from "@material-ui/icons"
 
 import { Modal } from "react-responsive-modal";
 import { Avatar, Button, Input } from "@material-ui/core";
@@ -23,7 +15,6 @@ import "../css/QuoraBox.css";
 function QuoraBox() {
   const navigate = useNavigate ();
 
-  const [UID, setUID] = useState ();
   const [email, setEmail] = useState ();
   const [photo, setPhoto] = useState ();
 
@@ -34,13 +25,9 @@ function QuoraBox() {
   const [question, setQuestion] = useState("");
   const [timestamp, setTimestamp] = useState (Date);
   const [religionCategory, setReligionCategory] = useState ("Christianity")
-  // username missing
-
-  console.log (answers_count)
-  console.log (question)
-  console.log (religionCategory)
-  console.log (timestamp)
-  console.log (UID)
+  const [upvotes, setUpvotes] = useState (0)
+  const [username, setUsername] = useState ();
+  const [uid, setUid] = useState ();
 
   const Close = <CloseIcon />;
   const auth = getAuth();
@@ -48,13 +35,12 @@ function QuoraBox() {
 
   useEffect(()=> {
     if (user !== null) {
-      setUID (user.uid)
+      setUsername (user.displayName)
       setEmail (user.email)
       setPhoto (user.photoURL)
+      setUid (user.uid)
     }
   }, [user]);
-
-
 
 
 
@@ -71,7 +57,9 @@ function QuoraBox() {
         question: question,
         religionCategory: religionCategory,
         timestamp: timestamp,
-        username: UID,
+        upvotes: upvotes,
+        username: username,
+        uid: uid,
        })
 
       // Paste

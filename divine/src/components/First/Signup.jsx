@@ -5,6 +5,7 @@ import {UserAuth} from "../../context/AuthContext"
 const Signup = ({ setEmailApp }) => {
 
   const [email, setEmail] = useState ("")
+  const [username, setUsername] = useState ("")
   const [password, setPassword] = useState ("")
   const [error, setError] = useState ("")
   const {createUser} = UserAuth();
@@ -16,7 +17,7 @@ const Signup = ({ setEmailApp }) => {
 
     try{
       setEmailApp (email)
-      await createUser (email, password)
+      await createUser (username, email, password)
       navigate ("/welcome")
     }
     catch (e) {
@@ -37,6 +38,11 @@ const Signup = ({ setEmailApp }) => {
       </div>
 
       <form id='signup' className='signup' onSubmit={handleSubmit}>
+
+      <div className='flex flex-col py-2'>
+          <label for="username" className="py-2 font-medium">Username</label>
+          <input onChange={(e) => setUsername(e.target.value)} className='border p-3' type="text"></input>
+        </div>
 
         <div className='flex flex-col py-2'>
           <label for="email" className="py-2 font-medium">Email Adress</label>

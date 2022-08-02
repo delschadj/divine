@@ -8,7 +8,6 @@ import { users_colRef } from '../../firebase.js';
 function Welcome({emailApp}) {
 
   const [full_name, setFull_name] = useState ("")
-  const [username, setUsername] = useState ("")
   const [religion, setReligion] = useState ("Christianity")
   const [error, setError] = useState ("")
 
@@ -25,7 +24,6 @@ function Welcome({emailApp}) {
       // Object to paste
       const docAdd = ({ 
         email: emailApp,
-        username: username,
         full_name: full_name,
         religion: religion,
        })
@@ -54,11 +52,6 @@ function Welcome({emailApp}) {
         <div className='flex flex-col py-2'>
           <label for="full_name" className="py-2 font-medium">Full name</label>
           <input name="full_name" onChange={(e) => setFull_name(e.target.value)} className='border p-3' type="text"></input>
-        </div>
-
-        <div className='flex flex-col py-2'>
-          <label for="username" className="py-2 font-medium">Username</label>
-          <input name="username" onChange={(e) => setUsername(e.target.value)} className='border p-3' type="text"></input>
         </div>
 
         <div className='flex flex-col py-2'>
